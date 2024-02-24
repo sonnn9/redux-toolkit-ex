@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+// src/components/App.js
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from './actions/counterActions';
+import { setMessage } from './actions/messageActions';
 
 function App() {
+  const counter = useSelector(state => state.counter);
+  const message = useSelector(state => state.message);
+  const dispatch = useDispatch();
+
+  const handleIncrement = () => {
+    dispatch(increment());
+  };
+
+  const handleDecrement = () => {
+    dispatch(decrement());
+  };
+
+  const handleChangeMessage = (newMessage) => {
+    dispatch(setMessage(newMessage));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Counter: {counter}</h1>
+      <button onClick={handleIncrement}>Increment</button>
+      <button onClick={handleDecrement}>Decrement</button>
+      <input type="text" value={message} onChange={(e) => handleChangeMessage(e.target.value)} />
+      <p>{message}</p>
     </div>
   );
 }
